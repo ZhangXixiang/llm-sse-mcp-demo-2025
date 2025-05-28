@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="messageFragment" class="mb-4">
+        <!-- User Message -->
+        <div class="flex justify-end mb-2">
+            <div class="bg-blue-500 text-white px-4 py-2 rounded-lg max-w-xs lg:max-w-md">
+                <span th:text="${userMessage}"></span>
+            </div>
+        </div>
+        <!-- AI Response -->
+        <div class="flex justify-start">
+            <div class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg max-w-xs lg:max-w-md">
+                <span th:text="${aiResponse}"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
