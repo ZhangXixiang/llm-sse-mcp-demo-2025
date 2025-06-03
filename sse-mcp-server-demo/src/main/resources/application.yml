@@ -21,6 +21,12 @@ spring:
           resource: true
           tool: true
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+
 logging:
   level:
     io.modelcontextprotocol: TRACE

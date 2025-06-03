@@ -1,0 +1,21 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: authorization-server-demo
+
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          chat-assistant-mcp-client:
+            registration:
+              client-id: "mcp-client"
+              client-secret: "{noop}mcp-secret"
+              scopes:
+                - mcp
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "client_credentials"

@@ -43,6 +43,25 @@ spring:
               url: http://localhost:8080
               sse-endpoint: /api/v1/sse
 
+  security:
+    oauth2:
+      client:
+        registration:
+          my-client1:
+            provider: auth-server
+            client-id: mcp-client
+            client-secret: mcp-secret
+            authorization-grant-type: client_credentials
+            scope:
+              - mcp
+        provider:
+          auth-server:
+            token-uri: http://localhost:9000/oauth2/token
+
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.mcp.client.autoconfigure.SseWebFluxTransportAutoConfiguration
+
 logging:
   level:
     io.modelcontextprotocol: TRACE

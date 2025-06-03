@@ -1,10 +1,18 @@
-# LLM SSE MCP Demo 2025
+# LLM SSE MCP Demo
 
-This project demonstrates the integration between LLM clients and MCP (Model Context Protocol) servers using Server-Sent Events (SSE) for real-time communication. It consists of two Spring Boot applications that showcase tool calling capabilities with various LLM models.
+This project demonstrates the integration between LLM clients and MCP (Model Context Protocol) servers using Server-Sent Events (SSE) for real-time communication. It consists of three Spring Boot applications that showcase OAuth 2.0 security, tool calling capabilities with various LLM models, and secure authentication services.
 
 ## Project Structure
 
-### 1. SSE MCP Server Demo (`sse-mcp-server-demo`)
+### 1. Authorization Server Demo (`authorization-server-demo`)
+A Spring Boot application that implements OAuth 2.0 authorization server functionality, providing secure authentication and authorization services.
+
+**Features:**
+- **OAuth 2.0 Authorization Server**: Issues access tokens and validates them
+
+**Port:** 9000
+
+### 2. SSE MCP Server Demo (`sse-mcp-server-demo`)
 A Spring Boot application that serves as an MCP server, exposing mathematical and date/time tools via SSE endpoints.
 
 **Features:**
@@ -21,7 +29,7 @@ A Spring Boot application that serves as an MCP server, exposing mathematical an
 
 **Port:** 8080 (default)
 
-### 2. LLM MCP Client Demo (`llm-mcp-client-demo`)
+### 3. LLM MCP Client Demo (`llm-mcp-client-demo`)
 A Spring Boot web application that connects to the MCP server and provides an interactive chat interface with multiple LLM providers.
 
 **Features:**
@@ -58,19 +66,25 @@ export GOOGLE_ZONE=your_google_zone
 
 ## Quick Start
 
-### 1. Start the MCP Server
+### 1. Start the Authorization Server
+```bash
+cd authorization-server-demo
+./gradlew bootRun
+```
+
+### 2. Start the MCP Server
 ```bash
 cd sse-mcp-server-demo
 ./gradlew bootRun
 ```
 
-### 2. Start the LLM Client
+### 3. Start the LLM Client
 ```bash
 cd llm-mcp-client-demo
 ./gradlew bootRun
 ```
 
-### 3. Access the Chat Interface
+### 4. Access the Chat Interface
 Open your browser and navigate to: `http://localhost:9090`
 
 ## Usage
@@ -88,6 +102,7 @@ Example queries:
 ## Technology Stack
 
 - **Spring Boot 3.x**
+- **Spring Security OAuth2**
 - **Spring AI** - LLM integration framework
 - **Model Context Protocol (MCP)** - Tool discovery and execution
 - **Server-Sent Events (SSE)** - Real-time communication
@@ -96,7 +111,8 @@ Example queries:
 
 ## Configuration
 
-Both applications use YAML configuration files:
+All applications use YAML configuration files:
+- Authorization server configuration in `authorization-server-demo/src/main/resources/application.yml`
 - MCP server configuration in `sse-mcp-server-demo/src/main/resources/application.yml`
 - LLM client configuration in `llm-mcp-client-demo/src/main/resources/application.yml`
 
@@ -108,5 +124,6 @@ The project demonstrates:
 - **Multi-provider LLM Integration**
 - **Tool Calling and Discovery**
 - **Interactive Web Interfaces**
+- **MCP Authorization with OAuth2**
 
 This demo serves as a foundation for building more complex LLM-powered applications with external tool capabilities.
