@@ -1,10 +1,19 @@
-server.port: 9090
+server.port: 10101
 
 spring:
   application:
     name: llm-mcp-client-demo
 
   ai:
+    chat:
+      client:
+        observations:
+          log-prompt: true
+      observations:
+        log-prompt: true
+        log-completion: true
+        include-error-logging: true
+
     anthropic:
       api-key: ${ANTHROPIC_API_KEY}
       chat:
@@ -62,7 +71,44 @@ spring:
     exclude:
       - org.springframework.ai.mcp.client.autoconfigure.SseWebFluxTransportAutoConfiguration
 
+
 logging:
   level:
     io.modelcontextprotocol: TRACE
     org.springframework.ai.mcp: TRACE
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        # Open up all Spring Boot Actuator endpoints for the demo, don't do this in production!
+        include: "*"
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        step: 5s
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: local
+    distribution:
+      percentiles-histogram:
+        all: true
+    enable:
+      all: true
+
+  otlp:
+    tracing:
+      endpoint: "http://localhost:4317"
+      transport: grpc

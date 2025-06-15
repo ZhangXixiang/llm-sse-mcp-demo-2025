@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 45s # By default, scrape targets every 45 seconds.
+scrape_configs:
+
+  - job_name: 'authorization_server'
+    scrape_interval: 60s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:9000' ]
+
+  - job_name: 'sse_mcp_server'
+    scrape_interval: 30s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8080' ]
+
+  - job_name: 'llm_mcp_client'
+    scrape_interval: 30s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:10101' ]

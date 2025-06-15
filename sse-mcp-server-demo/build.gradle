@@ -19,12 +19,19 @@ repositories {
 
 ext {
 	set('springAiVersion', "1.0.0")
+	set('lokiLogbackAppenderVersion', "2.0.0")
 }
 
 dependencies {
 	implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webmvc'
 
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly 'io.micrometer:micrometer-tracing-bridge-otel'
+	runtimeOnly 'io.opentelemetry:opentelemetry-exporter-otlp'
+	implementation "com.github.loki4j:loki-logback-appender:${lokiLogbackAppenderVersion}"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

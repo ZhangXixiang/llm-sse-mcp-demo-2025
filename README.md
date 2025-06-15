@@ -1,4 +1,4 @@
-# LLM SSE MCP Demo
+# LLM SSE MCP with Observability (Prometheus/Metrics, Tempo/Traces, Loki/Logs, Grafana)
 
 This project demonstrates the integration between LLM clients and MCP (Model Context Protocol) servers using Server-Sent Events (SSE) for real-time communication. It consists of three Spring Boot applications that showcase OAuth 2.0 security, tool calling capabilities with various LLM models, and secure authentication services.
 
@@ -44,7 +44,7 @@ A Spring Boot web application that connects to the MCP server and provides an in
 - **Google Gemini**: gemini-2.5-flash-preview-05-20
 - **Ollama**: qwen3:8b (local)
 
-**Port:** 9090
+**Port:** 10101
 
 ## Prerequisites
 
@@ -52,6 +52,7 @@ A Spring Boot web application that connects to the MCP server and provides an in
 - Gradle
 - API keys for cloud LLM providers (optional)
 - Ollama installed locally (for local models)
+- Docker & Docker Compose
 
 ## Environment Variables
 
@@ -66,26 +67,43 @@ export GOOGLE_ZONE=your_google_zone
 
 ## Quick Start
 
-### 1. Start the Authorization Server
+### 1. Start Prometheus, Tempo, Loki, Grafana
+```bash
+docker compose up -d
+```
+
+### 2. Start the Authorization Server
 ```bash
 cd authorization-server-demo
 ./gradlew bootRun
 ```
 
-### 2. Start the MCP Server
+### 3. Start the MCP Server
 ```bash
 cd sse-mcp-server-demo
 ./gradlew bootRun
 ```
 
-### 3. Start the LLM Client
+### 4. Start the LLM Client
 ```bash
 cd llm-mcp-client-demo
 ./gradlew bootRun
 ```
 
-### 4. Access the Chat Interface
-Open your browser and navigate to: `http://localhost:9090`
+### 5. Access the Chat Interface
+Open your browser and navigate to: `http://localhost:10101`
+
+### 6. Access Grafana and explore Prometheus, Tempo, Loki
+Open your browser and navigate to: `http://localhost:3000`
+
+> `Data sources` -> `Prometheus` -> `Explore`
+![prometheus](./images/prometheus.png)
+
+> `Data sources` -> `Tempo` -> `Explore`
+![tempo](./images/tempo.png)
+
+> `Data sources` -> `Loki` -> `Explore`
+![loki](./images/loki.png)
 
 ## Usage
 
@@ -125,5 +143,6 @@ The project demonstrates:
 - **Tool Calling and Discovery**
 - **Interactive Web Interfaces**
 - **MCP Authorization with OAuth2**
+- **Observation with Spring Actuator and Micrometer(OpenTelemetry, Prometheus, Tempo, Loki, Grafana)**
 
 This demo serves as a foundation for building more complex LLM-powered applications with external tool capabilities.

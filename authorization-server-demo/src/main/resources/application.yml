@@ -19,3 +19,41 @@ spring:
                 - "client_secret_basic"
               authorization-grant-types:
                 - "client_credentials"
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        # Open up all Spring Boot Actuator endpoints for the demo, don't do this in production!
+        include: "*"
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        step: 5s
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: local
+    distribution:
+      percentiles-histogram:
+        all: true
+    enable:
+      all: true
+
+  otlp:
+    tracing:
+      export:
+        enabled: true
+      endpoint: "http://localhost:4318/v1/traces"
+      transport: http
