@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: sse-mcp-server-demo
+
+  ai:
+    mcp:
+      server:
+        enabled: true
+        stdio: false
+        name: sse-mcp-server-demo
+        version: 1.0.0
+        resource-change-notification: true
+        tool-change-notification: true
+        prompt-change-notification: true
+        sse-endpoint: /api/v1/sse
+        sse-message-endpoint: /api/v1/mcp
+        type: sync
+        capabilities:
+          completion: true
+          prompt: true
+          resource: true
+          tool: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+
+logging:
+  level:
+    io.modelcontextprotocol: TRACE
+    org.springframework.ai.mcp: TRACE
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        # Open up all Spring Boot Actuator endpoints for the demo, don't do this in production!
+        include: "*"
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        step: 5s
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: local
+    distribution:
+      percentiles-histogram:
+        all: true
+    enable:
+      all: true
+
+  otlp:
+    tracing:
+      endpoint: "http://localhost:4317"
+      transport: grpc
